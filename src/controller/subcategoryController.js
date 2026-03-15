@@ -28,20 +28,28 @@ export async function getAllsubcategory(req,res){
   })
 }
 
+
 export async function deleteSubcategory(req,res){
-
   const id = req.params.id
-
   const deletedData = await subcategoryModel.findByIdAndDelete(id)
-
   if(!deletedData){
     return res.status(404).json({
       message:"Subcategory not found"
     })
   }
-
   res.status(200).json({
     success:true,
     message:"Subcategory deleted successfully!"
+  })
+}
+
+
+export async function getByIdSubcategory(req,res){
+  const id = req.params.id
+  const data = await subcategoryModel.findById(id).populate("category","name")
+ 
+  res.status(200).json({
+    message:"Data fetch successfully!",
+    data
   })
 }
